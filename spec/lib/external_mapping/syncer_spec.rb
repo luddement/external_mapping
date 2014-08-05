@@ -1,19 +1,20 @@
 require 'rails_helper'
-require 'external_mapping/syncer'
 
 module ExternalMapping
-  describe ExternalMapping::Syncer do
+  describe Syncer do
     describe '#new' do
-      before do
-
+      it 'should instantiate sync class for external source and mapped class' do
+        [Mapped, Mapped.new].each do |mapped|
+          expect(Syncer.new(:dummy, mapped)).to be_an_instance_of DummyMappedSync
+        end
       end
 
-      it 'should instantiate sync class for external source and mapped class' do
-        class ::Dummy; end;
-        class ::OtherDummySync; end;
+      it 'should raise exception when source is not defined' do
+        allow(ExternalMapping).to receive(:sources).and_return({})
 
-        :dummy.to_s.camelize
-        expect(Syncer.new(:dummy, Dummy)).to be_an_instance_of OtherDummySync
+        expect {
+          Syncer.new(:dummy, Mapped)
+        }.to raise_error(ArgumentError)
       end
     end
   end
