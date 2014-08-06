@@ -17,6 +17,7 @@
 /public/system
 .DS_Store
 config/database.yml
+*.gem
 
 spec/dummy/log/*.log
 spec/dummy/db/development.sqlite3
