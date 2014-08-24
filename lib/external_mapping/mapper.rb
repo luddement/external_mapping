@@ -14,6 +14,16 @@ module ExternalMapping
     def sync!
       return unless syncer.can_sync?
 
+      if syncer.respond_to?(:sync!)
+        syncer.sync! do
+          create_or_update!
+        end
+      else
+        create_or_update!
+      end
+    end
+
+    def create_or_update!
       if external = ExternalMapping::Map.find_mapping(mapped, external_type)
         update!(external)
       else
