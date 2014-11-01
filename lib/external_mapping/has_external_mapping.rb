@@ -17,7 +17,7 @@ module ExternalMapping
     def external_sync!
       if ExternalMapping.worker == :sidekiq
         external_mapping_mappers.each do |mapper|
-          ExternalMapping::SyncWorker.perform_async(mapper.external_source, self.class.name, self.id, self.external_params)
+          ExternalMapping::SyncWorker.perform_async(mapper.external_source, self.class.base_class.name, self.id, self.external_params)
         end
       else
         external_mapping_mappers.each(&:sync!)

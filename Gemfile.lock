@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    external_mapping (0.5.0)
+    external_mapping (0.5.1)
       rails (>= 4.0.0)
 
 GEM
