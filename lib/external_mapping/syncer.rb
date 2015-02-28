@@ -1,6 +1,6 @@
 module ExternalMapping
   class Syncer
-    def self.new(external_source, mapped, params={})
+    def self.build(external_source, mapped, params={})
       unless ExternalMapping.sources.keys.include?(external_source.to_sym)
         raise ArgumentError.new("External source is not defined. Define it in intitializers/external_mapping.rb")
       end

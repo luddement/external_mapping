@@ -13,7 +13,7 @@ module ExternalMapping
           subject.sync!
         }.to change { ExternalMapping::Map.count }.by(1)
 
-        expect(ExternalMapping::Map.last.external_id).to eq 123
+        expect(ExternalMapping::Map.last.external_id).to eq '123'
       end
 
       it 'it updates a mapping if it already exist' do

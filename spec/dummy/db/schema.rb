@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140803000137) do
+ActiveRecord::Schema.define(version: 20150225061008) do
 
   create_table "external_mapping_maps", force: true do |t|
     t.integer  "mapped_id",     null: false
     t.string   "mapped_type",   null: false
     t.integer  "external_type", null: false
-    t.integer  "external_id",   null: false
+    t.string   "external_id",   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

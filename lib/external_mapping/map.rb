@@ -18,6 +18,10 @@ module ExternalMapping
       def find_external(mapped_type, mapped_ids, external_id, external_type)
         self.find_by(mapped_type: mapped_type, mapped_id: mapped_ids, external_id: external_id, external_type: external_type)
       end
+
+      def destroy_mapping(mapped_type, mapped_id)
+        self.find_by(mapped_type: mapped_type, mapped_id: mapped_id).try(:destroy)
+      end
     end
   end
 end

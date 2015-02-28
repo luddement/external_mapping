@@ -11,6 +11,7 @@ module ExternalMapping
     included do
       if ExternalMapping::sync_after_save == true
         after_save :external_sync!
+        after_destroy :destroy_mapping!
       end
     end
 
@@ -23,6 +24,10 @@ module ExternalMapping
         external_mapping_mappers.each(&:sync!)
       end
       true
+    end
+
+    def destroy_mapping!
+      external_mapping_mappers.each(&:destroy_mapping!)
     end
 
     def external_synced?

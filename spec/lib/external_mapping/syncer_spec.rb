@@ -2,10 +2,10 @@ require 'rails_helper'
 
 module ExternalMapping
   describe Syncer do
-    describe '#new' do
+    describe '#build' do
       it 'should instantiate sync class for external source and mapped class' do
         [Mapped, Mapped.new].each do |mapped|
-          expect(Syncer.new(:dummy, mapped)).to be_an_instance_of DummyMappedSync
+          expect(Syncer.build(:dummy, mapped)).to be_an_instance_of DummyMappedSync
         end
       end
 
@@ -13,7 +13,7 @@ module ExternalMapping
         allow(ExternalMapping).to receive(:sources).and_return({})
 
         expect {
-          Syncer.new(:dummy, Mapped)
+          Syncer.build(:dummy, Mapped)
         }.to raise_error(ArgumentError)
       end
     end

@@ -42,7 +42,12 @@ module ExternalMapping
     end
 
     def find_external(mapped_ids, external_id)
-      ExternalMapping::Map.find_external(mapped_type, mapped_ids, external_id, external_type)
+      ExternalMapping::Map.find_external(mapped_type.name, mapped_ids, external_id, external_type)
+    end
+
+    def destroy_mapping!
+      # Add support to destroy external
+      ExternalMapping::Map.destroy_mapping(mapped_type.name, mapped.id)
     end
 
     def has_mapping?
@@ -56,7 +61,7 @@ module ExternalMapping
     private
 
     def syncer
-      @syncer ||= Syncer.new(external_source, mapped, params)
+      @syncer ||= Syncer.build(external_source, mapped, params)
     end
   end
 end

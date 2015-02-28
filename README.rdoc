@@ -1,3 +1,7 @@
 = ExternalMapping
 
+```
+rake external_mapping_engine:install:migrations
+```
+
 This project rocks and uses MIT-LICENSE.
