@@ -6,6 +6,7 @@ module ExternalMapping
       end
 
       mapped_type = mapped.class == Class ? mapped : mapped.class.name.constantize.base_class
+
       "#{external_source.to_s.camelize}#{mapped_type.name}Sync".constantize.new(mapped, params)
     end
   end

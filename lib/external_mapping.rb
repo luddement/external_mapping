@@ -1,6 +1,7 @@
 require 'external_mapping/engine'
 
 require 'external_mapping/has_external_mapping'
+require 'external_mapping/has_external_sync'
 require 'external_mapping/mapper'
 require 'external_mapping/syncer'
 require 'external_mapping/map'
