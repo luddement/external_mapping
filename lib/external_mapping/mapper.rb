@@ -33,7 +33,7 @@ module ExternalMapping
 
     def create!(external_id=nil)
       external_id = syncer.create! if external_id.nil?
-      ExternalMapping::Map.create_mapping(mapped, external_id, external_type)
+      ExternalMapping::Map.create_mapping(mapped, external_id, external_type) if external_id.present?
     end
 
     def update!(external)

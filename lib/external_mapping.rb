@@ -10,7 +10,7 @@ if defined?(Sidekiq)
 end
 
 module ExternalMapping
-  mattr_accessor :sources, :worker, :sync_after_save
+  mattr_accessor :sources, :worker, :sync_after_save, :default_external_params
 
   def self.config(&block)
     yield(self)

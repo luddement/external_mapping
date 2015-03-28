@@ -3,7 +3,10 @@ module ExternalMapping
     extend ActiveSupport::Concern
 
     module ActiveRecord
-      def has_external_mapping
+      def has_external_mapping(attrs={})
+        class << self; attr_reader :external_params; end
+        @external_params = attrs[:external_params] || ExternalMapping.default_external_params || { }
+
         include HasExternalMapping
       end
     end
@@ -31,11 +34,7 @@ module ExternalMapping
     end
 
     def external_synced?
-      external_mapping_mappers.any(&:has_mapping?)
-    end
-
-    def external_params
-      {}
+      external_mapping_mappers.any?(&:has_mapping?)
     end
 
     def external_mapping(external_source)
@@ -44,12 +43,20 @@ module ExternalMapping
       end.mapping
     end
 
+    def external_params
+      if self.class.base_class.external_params.kind_of?(Proc)
+        self.instance_exec(&self.class.base_class.external_params)
+      else
+        self.class.external_params
+      end
+    end
+
     private
 
     def external_mapping_mappers
       @external_mapping_mappers ||= begin
         ExternalMapping.sources.keys.map do |external_source|
-          ExternalMapping::Mapper.new(external_source, self, external_params)
+          ExternalMapping::Mapper.new(external_source, self, self.external_params)
         end
       end
     end
