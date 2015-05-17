@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 20150225061008) do
     t.datetime "updated_at"
   end
 
-  add_index "external_mapping_maps", ["mapped_type", "mapped_id", "external_type"], name: "index_unique_mapped_and_external", unique: true
-  add_index "external_mapping_maps", ["mapped_type", "mapped_id"], name: "index_external_mapping_maps_on_mapped_type_and_mapped_id"
+  add_index "external_mapping_maps", ["mapped_type", "mapped_id", "external_id", "external_type"], name: "index_unique_mapped_and_external", unique: true
+  add_index "external_mapping_maps", ["mapped_type", "mapped_id", "external_type"], name: "index_mapped_and_external"
 
   create_table "mappeds", force: true do |t|
   end

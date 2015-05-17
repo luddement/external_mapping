@@ -46,7 +46,6 @@ module ExternalMapping
     end
 
     def destroy_mapping!
-      # Add support to destroy external
       ExternalMapping::Map.destroy_mapping(mapped_type.name, mapped.id)
     end
 
@@ -55,7 +54,13 @@ module ExternalMapping
     end
 
     def mapping
-      @mapping ||= ExternalMapping::Map.find_mapping(mapped, external_type)
+      @mapping ||= begin
+        if mapped.association(:external_maps).loaded?
+          mapped.external_maps.find { |map| map.external_type == external_type }
+        else
+          ExternalMapping::Map.find_mapping(mapped, external_type)
+        end
+      end
     end
 
     private

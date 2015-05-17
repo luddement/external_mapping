@@ -8,7 +8,7 @@ class CreateExternalMappingMaps < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :external_mapping_maps, [:mapped_type, :mapped_id, :external_type]
+    add_index :external_mapping_maps, [:mapped_type, :mapped_id, :external_type], name: "index_mapped_and_external"
     add_index :external_mapping_maps, [:mapped_type, :mapped_id, :external_id, :external_type], unique: true, name: "index_unique_mapped_and_external"
   end
 end

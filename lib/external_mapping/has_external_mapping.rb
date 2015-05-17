@@ -12,6 +12,8 @@ module ExternalMapping
     end
 
     included do
+      has_many :external_maps, as: :mapped, class_name: ExternalMapping::Map
+
       if ExternalMapping::sync_after_save == true
         after_save :external_sync_async!
         after_destroy :destroy_mapping!
