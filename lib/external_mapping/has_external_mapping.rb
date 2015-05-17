@@ -5,7 +5,9 @@ module ExternalMapping
     module ActiveRecord
       def has_external_mapping(attrs={})
         class << self; attr_reader :external_params; end
+        class << self; attr_reader :external_sync_after_save; end
         @external_params = attrs[:external_params] || ExternalMapping.default_external_params || { }
+        @external_sync_after_save = attrs.key?(:sync_after_save) ? attrs[:sync_after_save] : false
 
         include HasExternalMapping
       end
@@ -14,7 +16,7 @@ module ExternalMapping
     included do
       has_many :external_maps, as: :mapped, class_name: ExternalMapping::Map
 
-      if ExternalMapping::sync_after_save == true
+      if ExternalMapping::sync_after_save && self.external_sync_after_save
         after_save :external_sync_async!
         after_destroy :destroy_mapping!
       end
