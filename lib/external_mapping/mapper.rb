@@ -37,8 +37,9 @@ module ExternalMapping
     end
 
     def update!(external)
-      syncer.update!(external.external_id)
-      external.touch
+      if syncer.update!(external.external_id)
+        external.touch
+      end
     end
 
     def find_external(mapped_ids, external_id)

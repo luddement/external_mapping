@@ -20,7 +20,7 @@ module ExternalMapping
         allow_any_instance_of(DummyMappedSync).to receive(:create!).and_return(123)
         subject.create!
 
-        allow_any_instance_of(DummyMappedSync).to receive(:update!)
+        allow_any_instance_of(DummyMappedSync).to receive(:update!).and_return(123)
         expect_any_instance_of(ExternalMapping::Map).to receive(:touch).with(no_args())
 
         expect {
