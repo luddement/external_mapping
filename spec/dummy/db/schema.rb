@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150225061008) do
+ActiveRecord::Schema.define(version: 20150603201507) do
 
   create_table "external_mapping_maps", force: true do |t|
     t.integer  "mapped_id",     null: false
@@ -22,8 +22,7 @@ ActiveRecord::Schema.define(version: 20150225061008) do
     t.datetime "updated_at"
   end
 
-  add_index "external_mapping_maps", ["mapped_type", "mapped_id", "external_id", "external_type"], name: "index_unique_mapped_and_external", unique: true
-  add_index "external_mapping_maps", ["mapped_type", "mapped_id", "external_type"], name: "index_mapped_and_external"
+  add_index "external_mapping_maps", ["mapped_type", "mapped_id", "external_type"], name: "index_unique_mapped_and_external", unique: true
 
   create_table "mappeds", force: true do |t|
   end
