@@ -15,20 +15,23 @@ module ExternalMapping
 
     included do
       has_many :external_maps, as: :mapped, class_name: ExternalMapping::Map
+      attr_accessor :skip_external_sync_after_save
 
       if ExternalMapping::sync_after_save && self.external_sync_after_save
-        after_save :external_sync_async!
+        after_save :external_sync_after_save!
         after_destroy :destroy_mapping!
       end
     end
 
-    def external_sync_async!
-      if ExternalMapping.worker == :sidekiq
-        external_mapping_mappers.each do |mapper|
-          ExternalMapping::SyncWorker.perform_async(mapper.external_source, self.class.base_class.name, self.id, self.external_params)
+    def external_sync_after_save!
+      unless self.skip_external_sync_after_save
+        if ExternalMapping.worker == :sidekiq
+          external_mapping_mappers.each do |mapper|
+            ExternalMapping::SyncWorker.perform_async(mapper.external_source, self.class.base_class.name, self.id, self.external_params)
+          end
+        else
+          external_sync!
         end
-      else
-        external_sync!
       end
       true
     end
