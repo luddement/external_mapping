@@ -3,6 +3,7 @@ module ExternalMapping
     self.table_name = 'external_mapping_maps'
 
     belongs_to :mapped, polymorphic: true
+    has_many :external_errors, class_name: 'ExternalMapping::Error', foreign_key: 'external_mapping_map_id', dependent: :destroy
 
     validates :mapped, :external_id, :external_type, presence: true
 

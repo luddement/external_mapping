@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150603201507) do
+ActiveRecord::Schema.define(version: 20171121120139) do
+
+  create_table "external_mapping_errors", force: true do |t|
+    t.integer  "external_mapping_map_id", null: false
+    t.string   "code"
+    t.text     "message"
+    t.text     "source"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "external_mapping_errors", ["external_mapping_map_id"], name: "index_external_mapping_errors_on_external_mapping_map_id"
 
   create_table "external_mapping_maps", force: true do |t|
     t.integer  "mapped_id",     null: false
