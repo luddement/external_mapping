@@ -6,7 +6,13 @@ module ExternalMapping
       end
 
       mapped_type = mapped.class == Class ? mapped : mapped.class.name.constantize.base_class
-      "#{external_source.to_s.camelize}#{mapped_type.name}Sync".constantize.new(mapped, params)
+      klass = "#{external_source.to_s.camelize}#{mapped_type.name}Sync".safe_constantize
+
+      if klass.present?
+        klass.new(mapped, params)
+      else
+        OpenStruct.new(:'can_sync?' => false)
+      end
     end
   end
 end
