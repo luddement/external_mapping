@@ -12,8 +12,8 @@ module ExternalMapping
         self.find_by(mapped: mapped, external_type: external_type)
       end
 
-      def create_mapping(mapped, external_id, external_type)
-        self.create!(mapped: mapped, external_id: external_id, external_type: external_type)
+      def create_mapping(mapped, external_id, external_type, file_id=nil)
+        self.create!(mapped: mapped, external_id: external_id, external_type: external_type, file_id: file_id)
       end
 
       def find_external(mapped_type, mapped_ids, external_id, external_type)
