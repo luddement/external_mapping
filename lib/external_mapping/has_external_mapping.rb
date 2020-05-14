@@ -15,7 +15,7 @@ module ExternalMapping
 
     included do
       has_many :external_maps, as: :mapped, class_name: 'ExternalMapping::Map'
-      has_many :external_errors, through: :external_maps, class_name: 'ExternalMapping::Error'
+      has_many :external_errors, -> { where(deleted_at: nil) }, through: :external_maps, class_name: 'ExternalMapping::Error'
       attr_accessor :skip_external_sync_after_save
 
       if ExternalMapping::sync_after_save && self.external_sync_after_save
